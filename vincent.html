@@ -44,6 +44,21 @@
         .next {
             right: 20px;
         }
+        .back-to-gallery {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            color: black;
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .back-to-gallery:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
@@ -137,6 +152,15 @@
                 showNextImage();
             };
 
+            const backButton = document.createElement('button');
+            backButton.className = 'back-to-gallery';
+            backButton.innerHTML = '返回';
+            backButton.onclick = (e) => {
+                e.stopPropagation();
+                fullscreenDiv.remove();
+            };
+
+            fullscreenDiv.appendChild(backButton);
             fullscreenDiv.appendChild(prevButton);
             fullscreenDiv.appendChild(fullscreenImg);
             fullscreenDiv.appendChild(nextButton);
