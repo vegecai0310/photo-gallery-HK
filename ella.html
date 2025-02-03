@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ella的作品</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 添加全屏显示样式 */
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            color: black;
+            font-size: 24px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+        .prev {
+            left: 20px;
+        }
+        .next {
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Ella的作品</h1>
+        <a href="index.html" class="back-button">返回首页</a>
+    </header>
+    
+    <main class="gallery">
+        <img src="images/ella/cover.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+        <img src="images/ella/1.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+        <img src="images/ella/2.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+        <img src="images/ella/3.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+        <img src="images/ella/4.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+        <img src="images/ella/5.JPG" alt="Ella的作品" onclick="showFullscreen(this)">
+    </main>
+
+    <script>
+        let currentIndex = 0;
+        const images = Array.from(document.querySelectorAll('.gallery img'));
+
+        function showFullscreen(img) {
+            currentIndex = images.indexOf(img);
+            const fullscreenDiv = document.createElement('div');
+            fullscreenDiv.className = 'fullscreen';
+            fullscreenDiv.onclick = () => fullscreenDiv.remove();
+
+            const fullscreenImg = document.createElement('img');
+            fullscreenImg.src = img.src;
+            fullscreenImg.alt = img.alt;
+
+            const prevButton = document.createElement('button');
+            prevButton.className = 'nav-button prev';
+            prevButton.innerHTML = '&lt;';
+            prevButton.onclick = (e) => {
+                e.stopPropagation();
+                showPrevImage();
+            };
+
+            const nextButton = document.createElement('button');
+            nextButton.className = 'nav-button next';
+            nextButton.innerHTML = '&gt;';
+            nextButton.onclick = (e) => {
+                e.stopPropagation();
+                showNextImage();
+            };
+
+            fullscreenDiv.appendChild(prevButton);
+            fullscreenDiv.appendChild(fullscreenImg);
+            fullscreenDiv.appendChild(nextButton);
+            document.body.appendChild(fullscreenDiv);
+        }
+
+        function showPrevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateFullscreenImage();
+        }
+
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateFullscreenImage();
+        }
+
+        function updateFullscreenImage() {
+            const fullscreenDiv = document.querySelector('.fullscreen');
+            if (fullscreenDiv) {
+                const img = fullscreenDiv.querySelector('img');
+                img.src = images[currentIndex].src;
+                img.alt = images[currentIndex].alt;
+            }
+        }
+    </script>
+</body>
+</html> 
